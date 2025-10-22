@@ -90,6 +90,8 @@ export function NewsGenerator() {
               </div>
 
               {/* Prompt Input */}
+
+              {/* This is where the inputs are given */}
               <div className="mb-4">
                 <label className="mb-2 block text-sm font-medium text-muted-foreground">Article Topic</label>
                 <Textarea
@@ -101,6 +103,7 @@ export function NewsGenerator() {
                 />
               </div>
 
+                {/* Button to generate aritcle  */}
               <Button onClick={handleGenerate} disabled={!prompt.trim() || isGenerating} className="w-full" size="lg">
                 {isGenerating ? (
                   <>
