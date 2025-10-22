@@ -40,31 +40,28 @@ export async function POST(req: Request) {
     let imageUrl = `/placeholder.svg?height=675&width=1200&query=${encodeURIComponent(imagePrompt)}`
 
 // Generate image based on the headline
-try {
-  const result = await generateText({
-    model: model_image,
-    prompt: imagePrompt,
-  });
-  
-  console.log('Image generation successful')
-  console.log('Number of files:', result.files?.length)
+// try {
+//   const result = await generateText({
+//     model: model_image,
+//     prompt: imagePrompt,
+//   });
 
-  if (result.files && result.files.length > 0) {
-    for (const file of result.files) {
-      if (file.mediaType.startsWith('image/')) {
-        // Convert base64 to data URL
-        if ('base64Data' in file) {
-          imageUrl = `data:${file.mediaType};base64,${(file as any)['base64Data']}`
-        }
-        console.log('Image URL created successfully')
-        break;
-      }
-    }
-  }
-} catch (imageError) {
-  console.error('Image generation failed:', imageError)
-  // Continue with placeholder image
-}
+//   if (result.files && result.files.length > 0) {
+//     for (const file of result.files) {
+//       if (file.mediaType.startsWith('image/')) {
+//         // Convert base64 to data URL
+//         if ('base64Data' in file) {
+//           imageUrl = `data:${file.mediaType};base64,${(file as any)['base64Data']}`
+//         }
+//         console.log('Image URL created successfully')
+//         break;
+//       }
+//     }
+//   }
+// } catch (imageError) {
+//   console.error('Image generation failed:', imageError)
+//   // Continue with placeholder image
+// }
     
     // Extract the image from the result
     

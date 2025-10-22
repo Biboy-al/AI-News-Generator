@@ -132,7 +132,9 @@ export function NewsGenerator() {
         </div>
 
         {/* Preview Section */}
-        <div className="flex-1 overflow-auto bg-background">
+        <div className="flex-1 overflow-auto bg-background bg-white">
+        {/* <StuffHeader/> */}
+
           {article ? (
             <NewsArticle article={article} template={selectedTemplate} />
           ) : (

@@ -2,6 +2,9 @@
 
 import Image from "next/image"
 import { Separator } from "@/components/ui/separator"
+import { StuffHeader } from "./stuff/stuff-header"
+import { HeraldHeader } from "./herald/herald-header"
+import { GuardianHeader } from "./guardian/guadian-header"
 
 interface ArticleProps {
   article: {
@@ -19,7 +22,7 @@ export function NewsArticle({ article, template }: ArticleProps) {
   const templateStyles = {
     "nz-herald": {
       container: "bg-white text-black",
-      header: "border-t-4 border-red-600 bg-white",
+      header: <HeraldHeader/>,
       headline: "font-serif text-4xl font-bold leading-tight text-black",
       subheadline: "font-serif text-xl text-gray-700",
       meta: "text-sm text-gray-600",
@@ -28,7 +31,7 @@ export function NewsArticle({ article, template }: ArticleProps) {
     },
     stuff: {
       container: "bg-white text-black",
-      header: "border-t-4 border-green-600 bg-white",
+      header: <StuffHeader/>,
       headline: "font-sans text-4xl font-black leading-tight text-black",
       subheadline: "font-sans text-xl font-medium text-gray-700",
       meta: "text-sm font-medium text-gray-600",
@@ -37,7 +40,7 @@ export function NewsArticle({ article, template }: ArticleProps) {
     },
     guardian: {
       container: "bg-white text-black",
-      header: "border-t-2 border-blue-800 bg-white",
+      header: <GuardianHeader/>,
       headline: "font-serif text-5xl font-bold leading-tight text-black",
       subheadline: "font-serif text-xl italic text-gray-700",
       meta: "text-sm text-gray-600",
@@ -46,7 +49,7 @@ export function NewsArticle({ article, template }: ArticleProps) {
     },
     modern: {
       container: "bg-gray-50 text-gray-900",
-      header: "border-t border-gray-200 bg-white",
+      header: <StuffHeader/>,
       headline: "font-sans text-5xl font-extrabold leading-tight text-gray-900",
       subheadline: "font-sans text-2xl font-light text-gray-600",
       meta: "text-sm font-medium text-gray-500",
@@ -59,15 +62,18 @@ export function NewsArticle({ article, template }: ArticleProps) {
 
   return (
     <div className={`min-h-full ${styles.container}`}>
+
       {/* Masthead */}
       <div className={`px-6 py-4 ${styles.header}`}>
         <div className="mx-auto max-w-4xl">
-          <div className={styles.logo}>
+
+          {styles.header}
+          {/* <div className={styles.logo}>
             {template === "nz-herald" && "The New Zealand Herald"}
             {template === "stuff" && "Stuff"}
             {template === "guardian" && "The Guardian"}
             {template === "modern" && "Modern News"}
-          </div>
+          </div> */}
         </div>
       </div>
 
