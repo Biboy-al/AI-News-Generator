@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { Loader2, Newspaper } from "lucide-react"
+import { Loader2, Newspaper, ChevronLeft, ChevronRight } from "lucide-react"
 import { NewsArticle } from "./news-article"
 
 type Template = "nz-herald" | "stuff" | "guardian" | "modern"
@@ -29,6 +29,7 @@ export function NewsGenerator() {
   const [selectedTemplate, setSelectedTemplate] = useState<Template>("nz-herald")
   const [isGenerating, setIsGenerating] = useState(false)
   const [article, setArticle] = useState<GeneratedArticle | null>(null)
+  const [isCollapsed, setIsCollapsed] = useState(false)
 
   const handleGenerate = async () => {
     if (!prompt.trim()) return
@@ -64,9 +65,13 @@ export function NewsGenerator() {
         </div>
       </header>
 
-      <div className="flex flex-1 flex-col lg:flex-row">
+      <div className="flex flex-1 flex-col lg:flex-row relative">
         {/* Input Section */}
-        <div className="w-full border-b border-border bg-card lg:w-2/5 lg:border-b-0 lg:border-r">
+        <div 
+          className={`transition-all duration-300 ease-in-out border-b border-border bg-card lg:border-b-0 lg:border-r ${
+            isCollapsed ? 'w-0 lg:w-0 overflow-hidden' : 'w-full lg:w-2/5'
+          }`}
+        >
           <div className="mx-auto flex h-full max-w-3xl flex-col p-6 lg:p-8">
             <div className="flex-1">
               <h2 className="mb-4 text-lg font-semibold">Generate Your Article</h2>
@@ -90,8 +95,6 @@ export function NewsGenerator() {
               </div>
 
               {/* Prompt Input */}
-
-              {/* This is where the inputs are given */}
               <div className="mb-4">
                 <label className="mb-2 block text-sm font-medium text-muted-foreground">Article Topic</label>
                 <Textarea
@@ -103,7 +106,7 @@ export function NewsGenerator() {
                 />
               </div>
 
-                {/* Button to generate aritcle  */}
+              {/* Button to generate article */}
               <Button onClick={handleGenerate} disabled={!prompt.trim() || isGenerating} className="w-full" size="lg">
                 {isGenerating ? (
                   <>
@@ -115,30 +118,33 @@ export function NewsGenerator() {
                 )}
               </Button>
             </div>
-
-            {/* Example Prompts */}
-            {!article && (
-              <div className="mt-8 rounded-lg bg-muted/50 p-4">
-                <h3 className="mb-2 text-sm font-semibold">Example Topics</h3>
-                <ul className="space-y-1 text-sm text-muted-foreground">
-                  <li>• Climate change summit reaches historic agreement</li>
-                  <li>• Local startup raises $50M in funding round</li>
-                  <li>• New study reveals surprising health benefits</li>
-                  <li>• City announces major infrastructure project</li>
-                </ul>
-              </div>
-            )}
           </div>
         </div>
 
+        {/* Toggle Button */}
+        <Button
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="absolute left-0 top-1/2 z-10 h-16 w-8 -translate-y-1/2 rounded-l-none rounded-r-md border-l-0 lg:left-auto"
+          style={{ left: isCollapsed ? '0' : 'calc(40% - 1rem)' }}
+          variant="outline"
+          size="sm"
+        >
+          {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+        </Button>
+
         {/* Preview Section */}
         <div className="flex-1 overflow-auto bg-background bg-white">
-        {/* <StuffHeader/> */}
-
           {article ? (
-            <NewsArticle article={article} template={selectedTemplate} />
+            <div>
+          
+              <NewsArticle article={article} template={selectedTemplate} />
+
+            </div>
+            
           ) : (
+            
             <div className="flex h-full items-center justify-center p-8">
+              
               <div className="text-center">
                 <Newspaper className="mx-auto mb-4 h-16 w-16 text-muted-foreground/50" />
                 <h3 className="mb-2 text-lg font-semibold text-muted-foreground">No Article Generated Yet</h3>

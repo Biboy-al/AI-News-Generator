@@ -9,7 +9,7 @@ const StuffHeader =  () =>{
         <header className="w-full border-b border-gray-200">
           <div className="flex items-center justify-between px-8 py-4">
             {/* Left: Support button */}
-            <button className="bg-purple-600 hover:bg-purple-700 text-white font-medium px-4 py-2 rounded-full transition">
+            <button className="bg-purple-600 hover:bg-purple-700 text-white font-medium px-4 py-2 text-sm rounded-full transition">
               Support Stuff
             </button>
     
