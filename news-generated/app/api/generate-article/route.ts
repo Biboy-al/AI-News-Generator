@@ -21,7 +21,7 @@ export async function POST(req: Request) {
       Format your response as follows:
       HEADLINE: [A compelling, attention-grabbing headline]
       SUBHEADLINE: [A brief subheadline that expands on the headline]
-      CONTENT: [The full article content with multiple paragraphs. Write 4-6 paragraphs of detailed, engaging news content. Separate paragraphs with double line breaks.]
+      CONTENT: [The full article content with multiple paragraphs. Write smaller 6-24 chucks of detailed, engaging news content consisting of 1-2 sentences for each chuck. Separate chuck with double line breaks]
 
       Make it sound professional and journalistic. Include relevant details, quotes, and context.`,
     })

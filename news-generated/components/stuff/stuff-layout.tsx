@@ -7,6 +7,7 @@ import { GeneratedArticle } from "../news-generator";
 import { StuffHeader } from "./stuff-header";
 import { StuffFooter } from "./stuff-footer";
 import OtherArticle from "./other-art";
+import { MoreFromStuff } from "./more-from-stuff";
 
 const style = {
         container: "bg-white text-black",
@@ -98,9 +99,14 @@ export function StuffLayout({article} : {article : GeneratedArticle}) {
                             
                             {/* Paragraph */}
                             {article.content.split("\n\n").map((paragraph, index) => (
-                                <p key={index} className="text-pretty">
-                                {paragraph}
-                                </p>
+                                <>
+                                    <p key={index} className="text-pretty">
+                                        {paragraph}
+                                    </p>
+                                    <br />
+                                </>
+     
+            
                             ))}
                         </div>
 
@@ -115,6 +121,12 @@ export function StuffLayout({article} : {article : GeneratedArticle}) {
                     awdawdawdad
                 </div>
             </article>
+
+            {/* <div>
+                <h1>MORE FROM STUFF</h1>
+            </div> */}
+
+            <MoreFromStuff/>
             {/* Footer DIv */}
             <div className="w-full">
                 <StuffFooter/>
