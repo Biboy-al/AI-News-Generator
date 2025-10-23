@@ -1,7 +1,7 @@
 import { Button } from "../ui/button";
 import { Menu } from "lucide-react";
 import Link from "next/link";
-
+import Stuff from "@/components/svg/stuff.svg"
 const StuffHeader =  () =>{
 
 
@@ -15,7 +15,10 @@ const StuffHeader =  () =>{
     
             {/* Center: Logo + Date */}
             <div className="flex flex-col items-center text-center">
-              <h1 className="text-4xl font-bold text-purple-600">Stuff</h1>
+              {/* <h1 className="text-4xl font-bold text-purple-600">Stuff</h1> */}
+
+              <Stuff  className="fill-purple-600 w-32"/>
+            
               <p className="text-gray-500 text-sm">Kia ora, Aotearoa • 22 Oct, 2025</p>
             </div>
     

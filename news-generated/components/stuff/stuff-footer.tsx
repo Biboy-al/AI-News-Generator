@@ -2,6 +2,7 @@ import { Button } from "../ui/button";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { Instagram, Youtube } from 'lucide-react';
+import Stuff from "@/components/svg/stuff.svg"
 
 const StuffFooter =  () =>{
 
@@ -10,9 +11,10 @@ const StuffFooter =  () =>{
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Top section with logo and social icons */}
             <div className="flex items-center justify-between py-6">
-              <Link href="/" className="text-4xl font-bold text-purple-600" style={{ fontFamily: 'serif' }}>
+            <Stuff  className="fill-purple-600 w-20 h-12"/>
+              {/* <Link href="/" className="text-4xl font-bold text-purple-600" style={{ fontFamily: 'serif' }}>
                 Stuff
-              </Link>
+              </Link> */}
               
               <div className="flex items-center gap-4">
                 <Link href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-pink-500 hover:text-pink-600">
