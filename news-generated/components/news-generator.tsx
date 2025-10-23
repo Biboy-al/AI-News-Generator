@@ -6,9 +6,9 @@ import { Textarea } from "@/components/ui/textarea"
 import { Loader2, Newspaper, ChevronLeft, ChevronRight } from "lucide-react"
 import { NewsArticle } from "./news-article"
 
-type Template = "nz-herald" | "stuff" | "guardian" | "modern"
+type Template = "nz-herald" | "stuff" | "guardian" 
 
-interface GeneratedArticle {
+export interface GeneratedArticle {
   headline: string
   subheadline: string
   content: string
@@ -21,7 +21,7 @@ const templates = [
   { id: "nz-herald" as Template, name: "NZ Herald", description: "Classic newspaper style" },
   { id: "stuff" as Template, name: "Stuff", description: "Modern news layout" },
   { id: "guardian" as Template, name: "Guardian", description: "Editorial style" },
-  { id: "modern" as Template, name: "Modern", description: "Clean minimal design" },
+  // { id: "modern" as Template, name: "Modern", description: "Clean minimal design" },
 ]
 
 export function NewsGenerator() {
