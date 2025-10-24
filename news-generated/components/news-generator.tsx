@@ -3,8 +3,13 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { Loader2, Newspaper, ChevronLeft, ChevronRight } from "lucide-react"
+import { Loader2, Newspaper, ChevronLeft, ChevronRight} from "lucide-react"
 import { NewsArticle } from "./news-article"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import {z} from "zod"
+import GenForm from "./form-inputs"
+
 
 type Template = "nz-herald" | "stuff" | "guardian" 
 
@@ -17,6 +22,16 @@ export interface GeneratedArticle {
   date: string
 }
 
+export const formSchema = z.object({
+  articlePrompt: z.string(),
+  imagePrompt: z.string()
+
+})
+
+
+
+
+
 const templates = [
   { id: "nz-herald" as Template, name: "NZ Herald", description: "Classic newspaper style" },
   { id: "stuff" as Template, name: "Stuff", description: "Modern news layout" },
@@ -25,14 +40,47 @@ const templates = [
 ]
 
 export function NewsGenerator() {
-  const [prompt, setPrompt] = useState("")
   const [selectedTemplate, setSelectedTemplate] = useState<Template>("nz-herald")
   const [isGenerating, setIsGenerating] = useState(false)
   const [article, setArticle] = useState<GeneratedArticle | null>(null)
   const [isCollapsed, setIsCollapsed] = useState(false)
 
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      articlePrompt: "",
+      imagePrompt: ""
+    },
+  })
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log("Form submitted with values:", values)
+
+    setIsGenerating(true)
+    try {
+      // Creates a post request to the server
+      const response = await fetch("/api/generate-article", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          articlePrompt: values.articlePrompt,
+          imagePrompt: values.imagePrompt,
+          template: selectedTemplate 
+        }),
+      })
+
+      if (!response.ok) throw new Error("Failed to generate article")
+
+      const data = await response.json()
+      setArticle(data)
+    } catch (error) {
+      console.error("Error generating article:", error)
+    } finally {
+      setIsGenerating(false)
+    }
+  }
+
   const handleGenerate = async () => {
-    if (!prompt.trim()) return
 
     setIsGenerating(true)
     try {
@@ -93,30 +141,10 @@ export function NewsGenerator() {
                   ))}
                 </div>
               </div>
+                
+              {/* Form to generate articles */}
+              <GenForm form={form} onSubmit={onSubmit} isGenerating={isGenerating} />
 
-              {/* Prompt Input */}
-              <div className="mb-4">
-                <label className="mb-2 block text-sm font-medium text-muted-foreground">Article Topic</label>
-                <Textarea
-                  placeholder="Enter your news topic or story idea... (e.g., 'Breaking: New technology revolutionizes renewable energy')"
-                  value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
-                  className="min-h-[200px] resize-none"
-                  disabled={isGenerating}
-                />
-              </div>
-
-              {/* Button to generate article */}
-              <Button onClick={handleGenerate} disabled={!prompt.trim() || isGenerating} className="w-full" size="lg">
-                {isGenerating ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Generating Article...
-                  </>
-                ) : (
-                  "Generate Article"
-                )}
-              </Button>
             </div>
           </div>
         </div>
