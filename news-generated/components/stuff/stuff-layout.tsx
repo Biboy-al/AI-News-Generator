@@ -11,7 +11,7 @@ import { MoreFromStuff } from "./more-from-stuff";
 
 const style = {
         container: "text-black",
-        contentContainer: "w-full max-w-[1400px] mx-auto px-6",
+        contentContainer: "w-full max-w-[1350px] mx-auto px-6",
         headline: "font-serif text-4xl font-black leading-tight text-black",
         subheadline: "font-sans text-xl font-medium text-gray-700",
         meta: "text-sm font-medium ",
@@ -35,20 +35,32 @@ const randomTitles = nzArticleTitles
 export function StuffLayout({article} : {article : GeneratedArticle}) {
 
   return (
-    <div className={`flex flex-col items-center ${style.container}`}>
+    <div className="flex flex-col text-black">
 
-        {/* Header - Centered with max-width */}
-        <div className="w-full max-w-[1400px] mx-auto px-6">
-            <StuffHeader/>
-        </div>
+        {/* Header - Full width, no container */}
+        {/* <StuffHeader/> */}
 
-        <hr className="w-full border-t border-gray-300" />
+        <hr className="w-full border-t border-gray-200 border-1 shadow-sm" />
 
         {/* Content container - Same width as header */}
         <div className={`${style.contentContainer}`}>
 
+            <div className="text-sm flex gap-2 py-4">
+                <a 
+                href="#"
+                className="border-transparent border-b hover:border-black transition">
+                    News
+                </a>
+                <span>|</span>
+                <a 
+                href="#"
+                className="text-purple-600 border-transparent border-b hover:border-black transition">
+                    News
+                </a>
+            </div>
+
             {/* Article Content */}
-            <article className="flex py-8">
+            <article className="flex gap-4">
                 <div className="flex-1">
                     {/* Headline */}
                     <h1 className={`mb-4 text-balance ${style.headline}`}>{article.headline}</h1>
@@ -71,8 +83,8 @@ export function StuffLayout({article} : {article : GeneratedArticle}) {
                     {/* Article Body */}
                     <div className={`space-y-6 ${style.content}`}>
 
-                        <div className="w-32 pr-4 flex-shrink-0">
-                            <h1 className="text-sm font-bold mb-4">Just in</h1>
+                        <div className="w-40 pr-4 flex-shrink-0">
+                            <h1 className="text-lg font-bold mb-4">Just In</h1>
 
                             {
                                 randomTitles.map((title, index) => (
@@ -83,7 +95,7 @@ export function StuffLayout({article} : {article : GeneratedArticle}) {
 
                         <div className="flex-1">
                             
-                            <div className="pl-4 border-l">
+                            <div className="pl-4 border-l border-gray-300">
                                 {/* Image */}
                                 <div className="mb-8 overflow-hidden rounded-lg">
                                     <Image
@@ -105,27 +117,28 @@ export function StuffLayout({article} : {article : GeneratedArticle}) {
                                 </div>
 
                             </div>
-
-                            {/* More From Stuff - Full width background, centered content */}
-                            <div className="w-full bg-gray-50">
-                                <MoreFromStuff/>
-                            </div>
                             
                         </div>
                     </div>
                 </div>
 
-                <div className=" w-1/3">
-                    
+                <div className="w-1/3">
+                    {/* Right sidebar content */}
                 </div>
             </article>
         </div>
 
-        {/* Footer - Centered with max-width */}
+        {/* More From Stuff - Full width background, centered content */}
+        <div className="w-full bg-gray-50 mt-12 py-8">
+            <div className="w-full max-w-[1350px] mx-auto px-6">
+                <MoreFromStuff/>
+            </div>
+        </div>
 
+        {/* Footer - Centered with max-width */}
         <hr className="w-full border-t-4 border-purple-600" />
 
-        <div className="w-full max-w-[1400px] mx-auto px-6">
+        <div className="w-full max-w-[1400px] mx-auto px-6 py-8">
             <StuffFooter/>
         </div>
     </div>

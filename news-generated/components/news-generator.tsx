@@ -9,6 +9,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import {z} from "zod"
 import GenForm from "./form-inputs"
+import { Checkbox } from "./ui/checkbox"
+import { HeraldHeader } from "./herald/herald-header"
+import { StuffHeader } from "./stuff/stuff-header"
+import { GuardianHeader } from "./guardian/guardian-header"
 
 
 type Template = "nz-herald" | "stuff" | "guardian" 
@@ -29,15 +33,18 @@ export const formSchema = z.object({
 })
 
 
-
-
-
 const templates = [
   { id: "nz-herald" as Template, name: "NZ Herald", description: "Classic newspaper style" },
-  { id: "stuff" as Template, name: "Stuff", description: "Modern news layout" },
+  { id: "stuff" as Template, name: "Stuff", description: "Modern news layout"},
   { id: "guardian" as Template, name: "Guardian", description: "Editorial style" },
   // { id: "modern" as Template, name: "Modern", description: "Clean minimal design" },
 ]
+
+const templateHeader = {
+  "nz-herald": <HeraldHeader/>,
+  "stuff": <StuffHeader/>,
+  "guardian": <GuardianHeader/>
+}
 
 export function NewsGenerator() {
   const [selectedTemplate, setSelectedTemplate] = useState<Template>("nz-herald")
@@ -54,7 +61,6 @@ export function NewsGenerator() {
   })
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log("Form submitted with values:", values)
 
     setIsGenerating(true)
     try {
@@ -104,14 +110,22 @@ export function NewsGenerator() {
   return (
     <div className="flex min-h-screen flex-col">
       {/* Header */}
-      <header className="border-b border-border bg-card">
+      <header className="border-b border-border bg-card sticky top-0 z-100">
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3">
-            <Newspaper className="h-8 w-8" />
-            <h1 className="text-2xl font-bold text-balance">AI News Generator</h1>
+            {/* <Newspaper className="h-8 w-8" /> */}
+            {/* <h1 className="text-2xl font-bold text-balance">AI News Generator</h1> */}
+
+            {
+              templateHeader[selectedTemplate]
+            }
           </div>
         </div>
       </header>
+
+      {
+        
+      }
 
       <div className="flex flex-1 flex-col lg:flex-row relative">
         {/* Input Section */}
@@ -144,6 +158,13 @@ export function NewsGenerator() {
                 
               {/* Form to generate articles */}
               <GenForm form={form} onSubmit={onSubmit} isGenerating={isGenerating} />
+              
+
+              <div>
+                  <Checkbox/>
+                  <label>Display pay wall</label>
+              </div>
+
 
             </div>
           </div>
