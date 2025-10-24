@@ -7,7 +7,7 @@ import Stuff from "@/components/svg/stuff.svg"
 const StuffFooter =  () =>{
 
     return (
-        <footer className="bg-white border-t-4 border-purple-600">
+        <footer className="bg-white ">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Top section with logo and social icons */}
             <div className="flex items-center justify-between py-6">

@@ -4,10 +4,11 @@ import Link from "next/link";
 import Stuff from "@/components/svg/stuff.svg"
 const StuffHeader =  () =>{
 
+  const linkClasses = "hover:text-purple-600 border-transparent border-b-1 hover:border-black transition";
 
     return (
-        <header className="w-full border-b border-gray-200">
-          <div className="flex items-center justify-between px-8 py-4">
+        <header className="w-full border-gray-200">
+          <div className="flex items-center justify-between py-4">
             {/* Left: Support button */}
             <button className="bg-purple-600 hover:bg-purple-700 text-white font-medium px-4 py-2 text-sm rounded-full transition">
               Support Stuff
@@ -33,28 +34,28 @@ const StuffHeader =  () =>{
     
           {/* Navigation */}
           <nav className="flex justify-center space-x-6 pb-2 text-sm font-medium">
-            <Link href="#" className="hover:text-purple-600 transition">
+            <Link href="#" className={linkClasses}>
               NZ News
             </Link>
-            <Link href="#" className="hover:text-purple-600 transition">
+            <Link href="#" className={linkClasses}>
               World News
             </Link>
-            <Link href="#" className="hover:text-purple-600 transition">
+            <Link href="#" className={linkClasses}>
               Quizzes
             </Link>
-            <Link href="#" className="hover:text-purple-600 transition">
+            <Link href="#" className={linkClasses}>
               Property
             </Link>
-            <Link href="#" className="hover:text-purple-600 transition">
+            <Link href="#" className={linkClasses}>
               Money
             </Link>
-            <Link href="#" className="hover:text-purple-600 transition">
+            <Link href="#" className={linkClasses}>
               Life & Style
             </Link>
-            <Link href="#" className="hover:text-purple-600 transition">
+            <Link href="#" className={linkClasses}>
               Sport
             </Link>
-          </nav>
+        </nav>  
         </header>
       );
 }
