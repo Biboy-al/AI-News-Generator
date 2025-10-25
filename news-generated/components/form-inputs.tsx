@@ -109,10 +109,10 @@ const GenForm = ({form, onSubmit, isGenerating}: formProps) =>{
                         <Input
                             {...field}
                             type="number"
-                            min="1"
-                            max="10"
+                            value={field.value}
+                            onChange={(e) => field.onChange(Number(e.target.value))}
                             disabled={!form.watch("genMul") || isGenerating}
-                        />
+                            />
                         </FormControl>
                         <FormDescription>
                             Number of articles to generate in the same storyline

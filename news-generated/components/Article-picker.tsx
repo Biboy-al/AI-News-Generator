@@ -14,7 +14,7 @@ export function ArticlePicker({articles, onClick}: {articles: GeneratedArticle[]
       <>  
           <h1>Articles</h1>
           <ScrollArea 
-            className={` bg-secondary h-72 w-full rounded-md border ${!articles ? 'opacity-50 pointer-events-none' : ''}`}
+            className={`h-72 w-full rounded-md border ${!articles ? 'opacity-50 pointer-events-none' : ''}`}
           >
             <div className="p-4">
               {!articles ? (

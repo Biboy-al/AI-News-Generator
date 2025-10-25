@@ -53,6 +53,7 @@ export function NewsGenerator() {
   const [selectedTemplate, setSelectedTemplate] = useState<Template>("nz-herald")
   const [isGenerating, setIsGenerating] = useState(false)
   const [article, setArticle] = useState<GeneratedArticle | null>(null)
+  const [articles, setArticles] = useState<GeneratedArticle[] | null>(null)
   const [isCollapsed, setIsCollapsed] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -67,14 +68,11 @@ export function NewsGenerator() {
 
   const articlePickerOnClick = (article: GeneratedArticle) =>{
 
-    console.log(article.headline)
+    setArticle(article)
   }
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-
-    console.log(values)
-
-    setIsGenerating(true)
+  // Callback function to generate one article
+  const generateArticle = async (values: z.infer<typeof formSchema>) =>{
     try {
       // Creates a post request to the server
       const response = await fetch("/api/generate-article", {
@@ -90,13 +88,62 @@ export function NewsGenerator() {
       if (!response.ok) throw new Error("Failed to generate article")
 
       const data = await response.json()
+
+      setArticles([data])
       setArticle(data)
+    
     } catch (error) {
       console.error("Error generating article:", error)
     } finally {
       setIsGenerating(false)
     }
   }
+
+  const generateMulArticle = async (values: z.infer<typeof formSchema>) => {
+    const genArticles: GeneratedArticle[] = []
+
+    try {
+      for(let i = 0; i < values.numArticle; i++) {
+        const response = await fetch("/api/generate-article", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ 
+            articlePrompt: values.articlePrompt,
+            imagePrompt: values.imagePrompt,
+            template: selectedTemplate 
+          }),
+        })
+
+        if (!response.ok) throw new Error("Failed to generate article")
+
+        const data = await response.json()
+        genArticles.push(data)
+      }
+
+      setArticles(genArticles) // Set all articles at once
+      setArticle(genArticles[0]) // Set first article as current
+    } catch (error) {
+      console.error("Error generating article:", error)
+    } finally {
+      setIsGenerating(false)
+    }
+}
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+
+    console.log(values)
+
+    setIsGenerating(true)
+
+    if (!values.genMul){
+      await generateArticle(values)
+    }else{
+      await generateMulArticle(values)
+    }
+    
+  }
+
+  
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -150,7 +197,7 @@ export function NewsGenerator() {
               {/* Form to generate articles */}
               <GenForm form={form} onSubmit={onSubmit} isGenerating={isGenerating} />
               
-              <ArticlePicker articles={article ? [article] : []} onClick={articlePickerOnClick}/>
+              <ArticlePicker articles={articles ? articles : []} onClick={articlePickerOnClick}/>
 
 
             </div>
