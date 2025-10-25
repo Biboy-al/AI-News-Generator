@@ -99,35 +99,31 @@ export function NewsGenerator() {
     }
   }
 
-  const generateMulArticle = async (values: z.infer<typeof formSchema>) => {
-    const genArticles: GeneratedArticle[] = []
-
-    try {
-      for(let i = 0; i < values.numArticle; i++) {
-        const response = await fetch("/api/generate-article", {
+    const generateMulArticle = async (values: z.infer<typeof formSchema>) => {
+      setIsGenerating(true)
+      
+      try {
+        const response = await fetch("/api/generate-multiple-articles", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ 
             articlePrompt: values.articlePrompt,
             imagePrompt: values.imagePrompt,
-            template: selectedTemplate 
+            numArticles: values.numArticle
           }),
         })
-
-        if (!response.ok) throw new Error("Failed to generate article")
-
+    
+        if (!response.ok) throw new Error("Failed to generate articles")
+    
         const data = await response.json()
-        genArticles.push(data)
+        setArticles(data.articles)
+        setArticle(data.articles[0])
+      } catch (error) {
+        console.error("Error generating articles:", error)
+      } finally {
+        setIsGenerating(false)
       }
-
-      setArticles(genArticles) // Set all articles at once
-      setArticle(genArticles[0]) // Set first article as current
-    } catch (error) {
-      console.error("Error generating article:", error)
-    } finally {
-      setIsGenerating(false)
     }
-}
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
 
