@@ -83,7 +83,7 @@ export function StuffLayout({article} : {article : GeneratedArticle}) {
                     {/* Article Body */}
                     <div className={`space-y-6 ${style.content}`}>
 
-                        <div className="w-40 pr-4 flex-shrink-0">
+                        <div className="w-40 pr-4 flex-shrink-0 sticky top-24 self-start">
                             <h1 className="text-lg font-bold mb-4">Just In</h1>
 
                             {
@@ -117,7 +117,12 @@ export function StuffLayout({article} : {article : GeneratedArticle}) {
                                 </div>
 
                             </div>
-                            
+                            <div className="w-full bg-gray-50 mt-12 py-8 bg-white">
+                                <div className="w-full max-w-[1350px] mx-auto px-6">
+                                    <MoreFromStuff/>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -125,15 +130,11 @@ export function StuffLayout({article} : {article : GeneratedArticle}) {
                 <div className="w-1/3">
                     {/* Right sidebar content */}
                 </div>
+                
             </article>
         </div>
 
         {/* More From Stuff - Full width background, centered content */}
-        <div className="w-full bg-gray-50 mt-12 py-8">
-            <div className="w-full max-w-[1350px] mx-auto px-6">
-                <MoreFromStuff/>
-            </div>
-        </div>
 
         {/* Footer - Centered with max-width */}
         <hr className="w-full border-t-4 border-purple-600" />

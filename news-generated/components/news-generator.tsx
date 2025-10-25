@@ -13,6 +13,7 @@ import { Checkbox } from "./ui/checkbox"
 import { HeraldHeader } from "./herald/herald-header"
 import { StuffHeader } from "./stuff/stuff-header"
 import { GuardianHeader } from "./guardian/guardian-header"
+import { ArticlePicker } from "./Article-picker"
 
 
 type Template = "nz-herald" | "stuff" | "guardian" 
@@ -28,7 +29,9 @@ export interface GeneratedArticle {
 
 export const formSchema = z.object({
   articlePrompt: z.string(),
-  imagePrompt: z.string()
+  imagePrompt: z.string(),
+  numArticle: z.number(),
+  genMul: z.boolean()
 
 })
 
@@ -56,11 +59,20 @@ export function NewsGenerator() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       articlePrompt: "",
-      imagePrompt: ""
+      imagePrompt: "",
+      numArticle: 1,
+      genMul: false,
     },
   })
 
+  const articlePickerOnClick = (article: GeneratedArticle) =>{
+
+    console.log(article.headline)
+  }
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+
+    console.log(values)
 
     setIsGenerating(true)
     try {
@@ -81,27 +93,6 @@ export function NewsGenerator() {
       setArticle(data)
     } catch (error) {
       console.error("Error generating article:", error)
-    } finally {
-      setIsGenerating(false)
-    }
-  }
-
-  const handleGenerate = async () => {
-
-    setIsGenerating(true)
-    try {
-      const response = await fetch("/api/generate-article", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt, template: selectedTemplate }),
-      })
-
-      if (!response.ok) throw new Error("Failed to generate article")
-
-      const data = await response.json()
-      setArticle(data)
-    } catch (error) {
-      console.error("[v0] Error generating article:", error)
     } finally {
       setIsGenerating(false)
     }
@@ -159,11 +150,7 @@ export function NewsGenerator() {
               {/* Form to generate articles */}
               <GenForm form={form} onSubmit={onSubmit} isGenerating={isGenerating} />
               
-
-              <div>
-                  <Checkbox/>
-                  <label>Display pay wall</label>
-              </div>
+              <ArticlePicker articles={article ? [article] : []} onClick={articlePickerOnClick}/>
 
 
             </div>

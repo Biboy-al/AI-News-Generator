@@ -12,10 +12,12 @@ import z from "zod";
 import { UseFormReturn } from "react-hook-form";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
+import { Input } from "./ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
   
 
 interface formProps {
-    
     form: UseFormReturn<z.infer<typeof formSchema>>
     onSubmit: (values: z.infer<typeof formSchema>) => Promise<void>
     isGenerating: boolean
@@ -23,9 +25,7 @@ interface formProps {
 
 const GenForm = ({form, onSubmit, isGenerating}: formProps) =>{
 
-
     return(
-
         <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 
@@ -71,7 +71,60 @@ const GenForm = ({form, onSubmit, isGenerating}: formProps) =>{
                 )}
             />
 
-          <Button type="submit"  disabled={isGenerating} >Generate Article</Button>
+            <FormField
+                control={form.control}
+                name="genMul"
+                render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                        <FormControl>
+                            <Checkbox
+                                checked={field.value}
+                                onCheckedChange={(checked) => {
+                                    field.onChange(checked);
+                                    if (!checked) {
+                                        form.setValue("numArticle", 1);
+                                    }
+                                }}
+                            />
+                        </FormControl>
+                        <div className="space-y-1 leading-none">
+                            <FormLabel>
+                                Generate multiple articles in the same storyline
+                            </FormLabel>
+                            <FormDescription>
+                                Check this to generate multiple related articles
+                            </FormDescription>
+                        </div>
+                    </FormItem>
+                )}
+            />
+            
+            <FormField
+                control={form.control}
+                name="numArticle"
+                render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Number of Articles</FormLabel>
+                        <FormControl>
+                        <Input
+                            {...field}
+                            type="number"
+                            min="1"
+                            max="10"
+                            disabled={!form.watch("genMul") || isGenerating}
+                        />
+                        </FormControl>
+                        <FormDescription>
+                            Number of articles to generate in the same storyline
+                        </FormDescription>
+                        <FormMessage />
+                    </FormItem>
+                )}
+            />
+
+          <Button type="submit" disabled={isGenerating}>
+            {isGenerating ? "Generating..." : "Generate Article"}
+          </Button>
         </form>
     </Form>
     );
