@@ -9,6 +9,7 @@ import { HeraldFooter } from "./herald-footer";
 import { Button } from "../ui/button";
 import OtherArticle from "./other-art";
 import { RecommendedForYou } from "./recommened-for-you";
+import HeraldLogo from '@/components/svg/herald_logo.svg'
 
 const style = {
     container: "bg-white text-black",
@@ -65,7 +66,7 @@ export function HeraldLayout({article} : {article : GeneratedArticle}) {
             </div>
 
             {/* Article Content - matches header width */}
-            <article className="flex mx-auto gap-16 w-full max-w-[1400px] px-6 py-8">
+            <article className="flex mx-auto gap-16 w-3/5">
 
                 <div className="flex flex-col">
                     {/* Headline */}
@@ -73,9 +74,12 @@ export function HeraldLayout({article} : {article : GeneratedArticle}) {
                         
                     {/* Meta Info div */}
                     <div className={`mb-6 flex justify-between gap-4 ${style.meta}`}>
-                        <div>
-                            <p>{article.author}</p>
-                            <time>{article.date}</time>
+                        <div className="flex gap-2 items-center">
+                            <HeraldLogo className="h-12 w-12 p-4 fill-white bg-black rounded-full" />
+                            <div>
+                                <p>{article.author}</p>
+                                <time>{article.date}</time>
+                            </div>
                         </div>
                     </div>
 
