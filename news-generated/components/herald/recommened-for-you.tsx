@@ -92,7 +92,7 @@ export function RecommendedForYou() {
 
               {/* Category/Source */}
               <p className="text-xs text-gray-600 mb-2">
-                {article.category || article.author}
+                {article.category || "New Zealand"}
               </p>
 
               {/* Title */}

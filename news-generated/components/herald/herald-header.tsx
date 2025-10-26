@@ -32,7 +32,7 @@ const HeraldHeader = () => {
     
     const handleScroll = (e: Event) => {
       const target = e.target as HTMLElement;
-      setIsScrolled(target.scrollTop > 10);
+      setIsScrolled(target.scrollTop > 0);
     };
 
     if (scrollContainer) {
@@ -43,12 +43,8 @@ const HeraldHeader = () => {
 
   return (
     <header className="w-full bg-black text-white border-b border-gray-800">
-      {/* Top Row - Collapses with transition */}
-      <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
-          isScrolled ? "max-h-0 opacity-0" : "max-h-24 opacity-100"
-        }`}
-      >
+      {/* Top Row - Hides when scrolled */}
+      {!isScrolled && (
         <div className="flex items-center justify-between px-6 py-3">
           {/* Left Section: Menu + Search */}
           <div className="flex items-center space-x-6">
@@ -83,12 +79,10 @@ const HeraldHeader = () => {
             </button>
           </div>
         </div>
-      </div>
+      )}
  
       {/* Navigation Row */}
-      <nav className={`flex justify-center py-2 text-sm transition-all duration-300 ${
-        isScrolled ? "border-t-0" : "border-t border-gray-800"
-      }`}>
+      <nav className="flex justify-center py-2 text-sm border-t border-gray-800">
         <SubNav newsArea={newsArea} />
       </nav>
     </header>

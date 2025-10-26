@@ -30,7 +30,7 @@ const SubNav = ({newsArea}: {newsArea:string[]}) => {
     };
 
     return (
-        <div className="relative w-full">
+        <div className="flex items-center justify-center relative w-full">
             {/* Left Arrow */}
             {showLeftArrow && (
                 <button
@@ -47,7 +47,7 @@ const SubNav = ({newsArea}: {newsArea:string[]}) => {
                 onScroll={checkScroll}
                 className="w-full overflow-x-auto scrollbar-hide"
             >
-                <div className="flex">
+                <div className="flex items-center justify-center">
                     {newsArea.map((item, i) => (
                         <Button
                             key={i}

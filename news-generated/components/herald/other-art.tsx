@@ -14,7 +14,7 @@ const OtherArticle = ({title, category}: {title: string, category?: string}) => 
     });
 
     return (
-        <div className="border-gray-200 last:border-transparent flex flex-col gap-2 pb-4 mb-4">
+        <div className="border-gray-200 last:border-transparent flex flex-col gap-2 w-2/3 pb-4 mb-4">
             {category && (
                 <p className="text-gray-600 text-xs font-semibold uppercase tracking-wide">
                     {category}

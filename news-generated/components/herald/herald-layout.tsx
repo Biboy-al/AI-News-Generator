@@ -11,17 +11,16 @@ import OtherArticle from "./other-art";
 import { RecommendedForYou } from "./recommened-for-you";
 
 const style = {
-      container: "bg-white text-black",
-      contentContainer: "bg-white text-black flex px-10 ",
-      header: <HeraldHeader/>,
-      footer: <HeraldFooter/>,
-      headline: "font-serif text-4xl font-bold leading-tight text-black",
-      subheadline: "font-serif text-xl text-gray-700",
-      meta: "text-sm text-gray-600",
-      content: "font-serif text-lg leading-relaxed text-gray-900 border-b",
-      logo: "text-2xl font-bold text-red-600",
-  }
-
+    container: "bg-white text-black",
+    contentContainer: " w-10/11 flex", // Use px-10 and bg-black
+    header: <HeraldHeader/>,
+    footer: <HeraldFooter/>,
+    headline: "font-serif text-4xl font-bold leading-tight text-black",
+    subheadline: "font-serif text-xl text-gray-700",
+    meta: "text-sm text-gray-600",
+    content: "font-serif text-lg leading-relaxed text-gray-900",
+    logo: "text-2xl font-bold text-red-600",
+}
 
   interface ArticleData {
     title: string;
@@ -58,84 +57,88 @@ export function HeraldLayout({article} : {article : GeneratedArticle}) {
             <HeraldHeader/>
         </div> */}
 
-
         {/* Content container div */}
         <div className={`${style.contentContainer}`}>
 
+            <div className="w-1/6">
+
+            </div>
 
             {/* Article Content - matches header width */}
-            <article className="mx-auto w-full max-w-[1400px] px-6 py-8">
-                {/* Headline */}
-                <h1 className={`mb-4 text-balance ${style.headline}`}>{article.headline}</h1>
-                    
-                {/* Meta Info div */}
-                <div className={`mb-6 flex justify-between gap-4 ${style.meta}`}>
-                    <div>
-                        <p>{article.author}</p>
-                        <time>{article.date}</time>
+            <article className="flex mx-auto gap-16 w-full max-w-[1400px] px-6 py-8">
+
+                <div className="flex flex-col">
+                    {/* Headline */}
+                    <h1 className={`mb-4 text-balance ${style.headline}`}>{article.headline}</h1>
+                        
+                    {/* Meta Info div */}
+                    <div className={`mb-6 flex justify-between gap-4 ${style.meta}`}>
+                        <div>
+                            <p>{article.author}</p>
+                            <time>{article.date}</time>
+                        </div>
+                    </div>
+
+                    <Separator className="mb-8" />
+                        
+                    <div className="mb-6 flex justify-end w-full">
+                        
+                        <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                            <Gift size={18} />
+                            <span>Gift article</span>
+                        </Button>
+                        
+                        <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                            <Bookmark size={18} />
+                            <span>Save</span>
+                        </Button>
+                        
+                        <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                            <Share2 size={18} />
+                            <span>Share</span>
+                        </Button>
+                    </div>
+
+                    {/* Article Body */}
+                    <div className={`space-y-6 border-b ${style.content}`}>
+
+                        {/* Image */}
+                        <div className="mb-8 overflow-hidden rounded-lg">
+                            <Image
+                            src={article.imageUrl || "/placeholder.svg"}
+                            alt={article.headline}
+                            width={300}
+                            height={375}
+                            className="h-auto w-full object-cover"
+                            priority/>
+
+                        </div>
+                        
+                        {/* Paragraph */}
+                        {article.content.split("\n\n").map((paragraph, index) => (
+                            <p key={index} className="text-pretty">
+                            {paragraph}
+                            </p>
+                        ))}
                     </div>
                 </div>
 
-                <Separator className="mb-8" />
-                    
-                <div className="mb-6 flex justify-end w-full">
-                    
-                    <Button variant="ghost" size="sm" className="flex items-center gap-2">
-                        <Gift size={18} />
-                        <span>Gift article</span>
-                    </Button>
-                    
-                    <Button variant="ghost" size="sm" className="flex items-center gap-2">
-                        <Bookmark size={18} />
-                        <span>Save</span>
-                    </Button>
-                    
-                    <Button variant="ghost" size="sm" className="flex items-center gap-2">
-                        <Share2 size={18} />
-                        <span>Share</span>
-                    </Button>
-                </div>
+                <div className="flex items-center  w-4/7 ">
+            
+                    <div className="flex flex-col">
+                        <h1 className="font-bold text-2xl pb-6 ">Latest from The News</h1>
 
-                {/* Article Body */}
-                <div className={`space-y-6 ${style.content}`}>
-
-                    {/* Image */}
-                    <div className="mb-8 overflow-hidden rounded-lg">
-                        <Image
-                        src={article.imageUrl || "/placeholder.svg"}
-                        alt={article.headline}
-                        width={1200}
-                        height={675}
-                        className="h-auto w-full object-cover"
-                        priority/>
-
+                        {randomArticles.map((article, index) => (
+                            <OtherArticle 
+                                key={index} 
+                                title={article.title}
+                                category={article.category}
+                            />
+                        ))}
                     </div>
-                    
-                    {/* Paragraph */}
-                    {article.content.split("\n\n").map((paragraph, index) => (
-                        <p key={index} className="text-pretty">
-                        {paragraph}
-                        </p>
-                    ))}
                 </div>
             </article>
 
-            
-            <div className="flex items-center  w-3/7 ">
-            
-
-                <div className="flex flex-col">
-                    <h1 className="font-bold text-2xl pb-6">Latest from The News</h1>
-
-                    {randomArticles.map((article, index) => (
-                        <OtherArticle 
-                            key={index} 
-                            title={article.title}
-                            category={article.category}
-                        />
-                    ))}
-                </div>
-            </div>
         </div>
         <RecommendedForYou/>
 
