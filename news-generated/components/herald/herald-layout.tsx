@@ -2,22 +2,49 @@
 
 import Image from "next/image"
 import { Separator } from "@/components/ui/separator"
-import { Link } from 'lucide-react';
+import { Bookmark, Gift, Link, Share2, Volume2 } from 'lucide-react';
 import { GeneratedArticle } from "../news-generator";
 import { HeraldHeader } from "./herald-header";
 import { HeraldFooter } from "./herald-footer";
+import { Button } from "../ui/button";
+import OtherArticle from "./other-art";
+import { RecommendedForYou } from "./recommened-for-you";
 
 const style = {
       container: "bg-white text-black",
-      contentContainer: "bg-white text-black",
+      contentContainer: "bg-white text-black flex px-10 ",
       header: <HeraldHeader/>,
       footer: <HeraldFooter/>,
       headline: "font-serif text-4xl font-bold leading-tight text-black",
       subheadline: "font-serif text-xl text-gray-700",
       meta: "text-sm text-gray-600",
-      content: "font-serif text-lg leading-relaxed text-gray-900",
+      content: "font-serif text-lg leading-relaxed text-gray-900 border-b",
       logo: "text-2xl font-bold text-red-600",
   }
+
+
+  interface ArticleData {
+    title: string;
+    category: string;
+  }
+  
+  const nzArticles: ArticleData[] = [
+    { title: "New Zealand Launches AI Framework to Strengthen Digital Safety", category: "Technology" },
+    { title: "Auckland Housing Market Sees Signs of Recovery After Two-Year Slump", category: "Property" },
+    { title: "Government Unveils New Climate Policy Targeting Zero Emissions by 2040", category: "Environment" },
+    { title: "Kiwi Startups Lead the Pacific in Green Tech Innovation", category: "Business" },
+    { title: "Cybersecurity Incidents Rise Across NZ Businesses Amid Global Threat Surge", category: "Technology" },
+    { title: "Wellington Transport Agency Announces Major Rail Upgrade Plan", category: "Transport" },
+    { title: "All Blacks Prepare for Crucial Rugby Championship Showdown", category: "Sport" },
+    { title: "Māori Language Week Celebrations Draw Record Participation Nationwide", category: "Culture" },
+    { title: "Christchurch Residents Rally Against Proposed Port Expansion", category: "Local News" },
+    { title: "Kiwi Scientists Make Breakthrough in Native Bird Conservation", category: "Environment" },
+    { title: "Cost of Living Crisis: Supermarkets Face Scrutiny Over Price Gouging Claims", category: "Business" },
+  ];
+  
+  const randomArticles = nzArticles
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 3);
 
 
 export function HeraldLayout({article} : {article : GeneratedArticle}) {
@@ -27,12 +54,14 @@ export function HeraldLayout({article} : {article : GeneratedArticle}) {
     <div className={`min-h-full flex flex-col items-center ${style.container}`}>
 
         {/* Header */}
-        <div className="w-full">
+        {/* <div className="w-full">
             <HeraldHeader/>
-        </div>
+        </div> */}
+
 
         {/* Content container div */}
         <div className={`${style.contentContainer}`}>
+
 
             {/* Article Content - matches header width */}
             <article className="mx-auto w-full max-w-[1400px] px-6 py-8">
@@ -45,15 +74,27 @@ export function HeraldLayout({article} : {article : GeneratedArticle}) {
                         <p>{article.author}</p>
                         <time>{article.date}</time>
                     </div>
- 
-                    <button className="flex items-center gap-4 border bg-white border-gray-300 text-black rounded-full px-4 py-1 text-sm hover:bg-gray-50 transition">
-                        <Link size={20}/>
-                        Copy Link
-                        </button>
                 </div>
 
                 <Separator className="mb-8" />
-
+                    
+                <div className="mb-6 flex justify-end w-full">
+                    
+                    <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                        <Gift size={18} />
+                        <span>Gift article</span>
+                    </Button>
+                    
+                    <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                        <Bookmark size={18} />
+                        <span>Save</span>
+                    </Button>
+                    
+                    <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                        <Share2 size={18} />
+                        <span>Share</span>
+                    </Button>
+                </div>
 
                 {/* Article Body */}
                 <div className={`space-y-6 ${style.content}`}>
@@ -78,10 +119,29 @@ export function HeraldLayout({article} : {article : GeneratedArticle}) {
                     ))}
                 </div>
             </article>
-            {/* Footer DIv */}
-            <div className="w-full">
-                <HeraldFooter/>
+
+            
+            <div className="flex items-center  w-3/7 ">
+            
+
+                <div className="flex flex-col">
+                    <h1 className="font-bold text-2xl pb-6">Latest from The News</h1>
+
+                    {randomArticles.map((article, index) => (
+                        <OtherArticle 
+                            key={index} 
+                            title={article.title}
+                            category={article.category}
+                        />
+                    ))}
+                </div>
             </div>
+        </div>
+        <RecommendedForYou/>
+
+        {/* Footer DIv */}
+        <div className="w-full">
+            <HeraldFooter/>
         </div>
     </div>
   );

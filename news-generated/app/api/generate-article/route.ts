@@ -1,5 +1,7 @@
 import { generateText } from "ai"
 import { google } from '@ai-sdk/google';
+import { retriveContext, vectorStore} from "@/lib/indexing";
+import { Document } from "@langchain/core/documents";
 
 
 
@@ -8,16 +10,21 @@ export async function POST(req: Request) {
   const model = google('gemini-2.5-flash');
   const model_image = google('gemini-2.5-flash-image');
 
+  
   try {
     const { articlePrompt, imagePrompt } = await req.json()
 
-    // Generate article content
+    const context = await retriveContext(articlePrompt)
 
-    console.log(req.json())
+    // const res = await vectorStore.similaritySearch("president", 2);
+
+    console.log(context)
 
     const { text } = await generateText({
       model: model,
       prompt: `You are a professional news journalist. Write a compelling news article based on this topic: "${articlePrompt}".
+
+      here are some context you may need: ${context}
 
       Format your response as follows:
       HEADLINE: [A compelling, attention-grabbing headline]
@@ -41,28 +48,28 @@ export async function POST(req: Request) {
     let imageUrl = `/placeholder.svg?height=675&width=1200&query=${encodeURIComponent(imageLoc)}`
 
 // Generate image based on the headline
-// try {
-//   const result = await generateText({
-//     model: model_image,
-//     prompt: imagePrompt,
-//   });
+try {
+  const result = await generateText({
+    model: model_image,
+    prompt: imagePrompt,
+  });
 
-//   if (result.files && result.files.length > 0) {
-//     for (const file of result.files) {
-//       if (file.mediaType.startsWith('image/')) {
-//         // Convert base64 to data URL
-//         if ('base64Data' in file) {
-//           imageUrl = `data:${file.mediaType};base64,${(file as any)['base64Data']}`
-//         }
-//         console.log('Image URL created successfully')
-//         break;
-//       }
-//     }
-//   }
-// } catch (imageError) {
-//   console.error('Image generation failed:', imageError)
-//   // Continue with placeholder image
-// }
+  if (result.files && result.files.length > 0) {
+    for (const file of result.files) {
+      if (file.mediaType.startsWith('image/')) {
+        // Convert base64 to data URL
+        if ('base64Data' in file) {
+          imageUrl = `data:${file.mediaType};base64,${(file as any)['base64Data']}`
+        }
+        console.log('Image URL created successfully')
+        break;
+      }
+    }
+  }
+} catch (imageError) {
+  console.error('Image generation failed:', imageError)
+  // Continue with placeholder image
+}
     
     // Extract the image from the result
     

@@ -16,6 +16,7 @@ import { GuardianHeader } from "./guardian/guardian-header"
 import { ArticlePicker } from "./Article-picker"
 
 
+
 type Template = "nz-herald" | "stuff" | "guardian" 
 
 export interface GeneratedArticle {
@@ -73,6 +74,9 @@ export function NewsGenerator() {
 
   // Callback function to generate one article
   const generateArticle = async (values: z.infer<typeof formSchema>) =>{
+
+
+
     try {
       // Creates a post request to the server
       const response = await fetch("/api/generate-article", {

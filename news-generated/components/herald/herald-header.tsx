@@ -1,4 +1,6 @@
 import { Menu, Search } from "lucide-react";
+// import Herald from "@/components/svg/New_Zealand_Herald_logo.svg";
+import Herald from "@/components/svg/herald.svg"
 import Link from "next/link";
 
 
@@ -27,9 +29,11 @@ const HeraldHeader =  () =>{
             </div>
     
             {/* Center: Logo */}
-            <h1 className="text-2xl font-serif font-bold tracking-tight">
+            {/* <h1 className="text-2xl font-serif font-bold tracking-tight">
               The New Zealand Herald
-            </h1>
+            </h1> */}
+
+            <Herald className="hover:fill-black " />
     
             {/* Right Section: Buttons */}
             <div className="flex items-center space-x-4">

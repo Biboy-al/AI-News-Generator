@@ -1,6 +1,7 @@
 import { Menu, Search } from "lucide-react";
 import Link from 'next/link';
 import { Facebook, Instagram, MessageCircle, Twitter, Youtube, ExternalLink } from 'lucide-react';
+import Herald from '@/components/svg/herald.svg'
 
 
 
@@ -11,7 +12,9 @@ const HeraldFooter =  () =>{
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Top section with logo and social icons */}
             <div className="flex items-center justify-between py-12 border-b border-gray-800">
-              <h2 className="text-4xl font-serif italic">The New Zealand Herald</h2>
+              {/* <h2 className="text-4xl font-serif italic">The New Zealand Herald</h2> */}
+
+              <Herald/>
               
               <div className="flex items-center gap-4">
                 <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
