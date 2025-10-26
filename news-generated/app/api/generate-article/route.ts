@@ -1,6 +1,6 @@
 import { generateText } from "ai"
 import { google } from '@ai-sdk/google';
-import { retriveContext, vectorStore} from "@/lib/indexing";
+import { retriveContext} from "@/lib/indexing";
 import { Document } from "@langchain/core/documents";
 
 
@@ -43,7 +43,8 @@ export async function POST(req: Request) {
     const headline = headlineMatch?.[1]?.trim() || "Breaking News"
     const subheadline = subheadlineMatch?.[1]?.trim() || "Latest developments in the story"
     const content = contentMatch?.[1]?.trim() || text
-    const imageLoc = `Professional news photography for article: ${headline}. The image should be ${imagePrompt} news-worthy.`
+    
+    const imageLoc = `Professional news photography for article: ${headline}. The image should be ${imagePrompt ? imagePrompt : "visually striking and"} news-worthy.`
 
     let imageUrl = `/placeholder.svg?height=675&width=1200&query=${encodeURIComponent(imageLoc)}`
 

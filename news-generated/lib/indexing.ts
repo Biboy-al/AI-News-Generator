@@ -6,27 +6,32 @@ import { MongoClient } from "mongodb";
 import { createVectoreStore } from "./db";
 
 
-
-const newsArticle = "https://www.bbc.com/news/articles/cx2n7k2veywo";
-
-const loader = new CheerioWebBaseLoader(newsArticle, {
-    selector: "p",
-})
-
-const docs = await loader.load()
-
-const splitter = new RecursiveCharacterTextSplitter({
-    chunkSize: 1000,
-    chunkOverlap: 200,
-});
-
-const allSplits = await splitter.splitDocuments(docs);
+// const newsArticle = "https://www.bbc.com/news/articles/cx2n7k2veywo";
 
 const embeddings = new CohereEmbeddings({
   model: "embed-english-v3.0"
 });
 
-export const vectorStore = createVectoreStore(embeddings)
+const vectorStore = createVectoreStore(embeddings)
+
+export async function loadData(url: string){
+
+  const loader = new CheerioWebBaseLoader(url, {
+    selector: "p",
+  })  
+
+  const docs = await loader.load()
+
+  const splitter = new RecursiveCharacterTextSplitter({
+      chunkSize: 1000,
+      chunkOverlap: 200,
+  });
+
+const allSplits = await splitter.splitDocuments(docs);
+
+vectorStore.addDocuments(allSplits)
+
+}
 
 export async function retriveContext(prompt: string): Promise<string> {
 

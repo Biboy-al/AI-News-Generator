@@ -1,12 +1,28 @@
 import { Menu, Search } from "lucide-react";
 import Link from "next/link";
+import { Button } from "../ui/button";
+import { Textarea } from "../ui/textarea";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 
+
+const newsArea = [
+  "World",
+  "Europe",
+  "US news",
+  "Americas",
+  "Asia",
+  "Australia",
+  "Middle East",
+  "Africa",
+  "Inequality",
+  "Global development",
+]
 
 const GuardianHeader =  () =>{
 
 
     return (
-        <header className="bg-[#052962] text-white">
+        <header className="bg-[#052962] text-white w">
           {/* Top bar */}
           <div className="flex justify-between items-center px-4 md:px-8 py-2 text-sm bg-[#041f4a]">
             <div className="flex items-center space-x-2">
@@ -46,22 +62,15 @@ const GuardianHeader =  () =>{
     
           {/* Sub-navigation */}
           <div className="flex flex-wrap gap-4 px-4 md:px-8 py-2 text-sm text-gray-300">
-            {[
-              "World",
-              "Europe",
-              "US news",
-              "Americas",
-              "Asia",
-              "Australia",
-              "Middle East",
-              "Africa",
-              "Inequality",
-              "Global development",
-            ].map((item) => (
-              <Link key={item} href="#" className="hover:text-white">
+            <ScrollArea>
+            {newsArea.map((item) => (
+              <Button key={item} className="hover:text-white">
                 {item}
-              </Link>
+              </Button>
             ))}
+
+            </ScrollArea>
+            
           </div>
         </header>
       );

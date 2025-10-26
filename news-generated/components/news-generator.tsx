@@ -46,7 +46,11 @@ const templates = [
 
 const templateHeader = {
   "nz-herald": <HeraldHeader/>,
-  "stuff": <StuffHeader/>,
+  "stuff": (
+    <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+      <StuffHeader/>
+    </div>
+  ),
   "guardian": <GuardianHeader/>
 }
 
@@ -147,25 +151,12 @@ export function NewsGenerator() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Header */}
-      <header className="border-b border-border bg-card sticky top-0 z-100">
-        <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3">
-            {/* <Newspaper className="h-8 w-8" /> */}
-            {/* <h1 className="text-2xl font-bold text-balance">AI News Generator</h1> */}
+    {/* Header - Now conditionally wraps based on template */}
+    <header className="border-b border-border bg-card sticky top-0 z-50 w-full">
+      {templateHeader[selectedTemplate]}
+    </header>
 
-            {
-              templateHeader[selectedTemplate]
-            }
-          </div>
-        </div>
-      </header>
-
-      {
-        
-      }
-
-      <div className="flex flex-1 flex-col lg:flex-row relative">
+    <div className="flex flex-1 flex-col lg:flex-row relative">
         {/* Input Section */}
         <div 
           className={`transition-all duration-300 ease-in-out border-b border-border bg-card lg:border-b-0 lg:border-r ${
