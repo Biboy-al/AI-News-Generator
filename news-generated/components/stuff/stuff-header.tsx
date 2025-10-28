@@ -6,10 +6,20 @@ import Stuff from "@/components/svg/stuff.svg";
 import { useEffect, useState } from "react";
 
 const StuffHeader = () => {
+  const [currentDate, setCurrentDate] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
   const linkClasses = "hover:text-purple-600 border-transparent border-b-2 hover:border-purple-600 transition text-sm font-semibold pb-1";
 
   useEffect(() => {
+    // Set current date on mount
+    const date = new Date();
+    const formattedDate = date.toLocaleDateString("en-NZ", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+    setCurrentDate(formattedDate);
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
     };
@@ -21,14 +31,14 @@ const StuffHeader = () => {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white">
+    <header className="sticky top-0 z-50 w-full">
       {/* Top section - collapses with transition */}
       <div
         className={`w-full overflow-hidden transition-all duration-300 ease-in-out ${
           isScrolled ? "max-h-0 opacity-0" : "max-h-40 opacity-100"
         }`}
       >
-        <div className="w-full max-w-[1350px] mx-auto px-6 py-4">
+        <div className="w-full max-w-[1300px]  mx-auto py-4">
           <div className="flex items-center justify-between">
             {/* Left: Support button */}
             <button className="bg-purple-600 hover:bg-purple-700 text-white font-medium px-4 py-2 text-sm rounded-full transition">
@@ -39,7 +49,7 @@ const StuffHeader = () => {
             <div className="flex flex-col items-center text-center gap-2">
               <Stuff className="fill-purple-600 w-32" />
               <p className="text-gray-700 text-sm tracking-wide">
-                Kia ora, Aotearoa • 25 Oct, 2025
+                Kia ora, Aotearoa • {currentDate || "Loading..."}
               </p>
             </div>
 
@@ -54,7 +64,7 @@ const StuffHeader = () => {
         </div>
 
         <nav className="w-full bg-white">
-          <div className="w-full max-w-[1350px] mx-auto px-6">
+          <div className="w-full max-w-[1300px] mx-auto">
             <div className="flex justify-center space-x-6 py-3 text-sm font-medium">
               <Link href="#" className={linkClasses}>
                 NZ News
@@ -88,7 +98,7 @@ const StuffHeader = () => {
           isScrolled ? "max-h-20 opacity-100" : "max-h-0 opacity-0"
         } overflow-hidden`}
       >
-        <div className="w-full max-w-[1350px] mx-auto px-6 flex items-center justify-between py-3">
+        <div className="w-full max-w-[1300px] mx-auto flex items-center justify-between py-3">
           <Stuff className="fill-purple-600 w-16" />
           
           <div className="flex justify-center space-x-6 text-sm font-medium">

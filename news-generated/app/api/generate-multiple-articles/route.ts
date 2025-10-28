@@ -1,5 +1,6 @@
 import { generateText } from "ai"
 import { google } from '@ai-sdk/google';
+import { retriveContext } from "@/lib/indexing";
 
 export async function POST(req: Request) {
   const model = google('gemini-2.5-flash');
@@ -13,10 +14,16 @@ export async function POST(req: Request) {
     const articles = []
     let previousContext = ""
 
+    const ragContext = await retriveContext(articlePrompt)
+
     for (let i = 0; i < numArticles; i++) {
       // Build context from previous articles
       const contextPrompt = i === 0 
-        ? `You are a professional news journalist. Write the FIRST article in a developing news story based on this topic: "${articlePrompt}".`
+        ? `You are a professional news journalist. Write the FIRST article in a developing news story based on this topic: "${articlePrompt}
+
+         here are some context you may need: ${ragContext}
+
+        ".`
         : `You are a professional news journalist. This is article ${i + 1} in a developing news story. 
         
         Previous article context: ${previousContext}
@@ -43,7 +50,7 @@ export async function POST(req: Request) {
       const headline = headlineMatch?.[1]?.trim() || `Breaking News - Story ${i + 1}`
       const subheadline = subheadlineMatch?.[1]?.trim() || "Latest developments in the story"
       const content = contentMatch?.[1]?.trim() || text
-      const imageLoc = `Professional news photography for article: ${headline}. The image should be ${imagePrompt} news-worthy.`
+      const imageLoc = `Professional news photography for article: ${headline}. The image should be ${imagePrompt ? imagePrompt : "visually striking and"} news-worthy.`
 
       let imageUrl = `/placeholder.svg?height=675&width=1200&query=${encodeURIComponent(imageLoc)}`
 

@@ -14,17 +14,13 @@ export async function POST(req: Request) {
   try {
     const { articlePrompt, imagePrompt } = await req.json()
 
-    const context = await retriveContext(articlePrompt)
-
-    // const res = await vectorStore.similaritySearch("president", 2);
-
-    console.log(context)
+    const ragContext = await retriveContext(articlePrompt)
 
     const { text } = await generateText({
       model: model,
       prompt: `You are a professional news journalist. Write a compelling news article based on this topic: "${articlePrompt}".
 
-      here are some context you may need: ${context}
+      here are some context you may need: ${ragContext}
 
       Format your response as follows:
       HEADLINE: [A compelling, attention-grabbing headline]

@@ -108,10 +108,11 @@ const GenForm = ({form, onSubmit, isGenerating}: formProps) =>{
                         <FormControl>
                         <Input
                             {...field}
-                            type="number"
+                            // type="number"
                             value={field.value}
                             onChange={(e) => field.onChange(Number(e.target.value))}
                             disabled={!form.watch("genMul") || isGenerating}
+                            className="bg-gray-100"
                             />
                         </FormControl>
                         <FormDescription>

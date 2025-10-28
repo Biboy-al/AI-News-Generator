@@ -40,14 +40,14 @@ export const formSchema = z.object({
 const templates = [
   { id: "nz-herald" as Template, name: "NZ Herald", description: "Classic newspaper style" },
   { id: "stuff" as Template, name: "Stuff", description: "Modern news layout"},
-  { id: "guardian" as Template, name: "Guardian", description: "Editorial style" },
+  // { id: "guardian" as Template, name: "Guardian", description: "Editorial style" },
   // { id: "modern" as Template, name: "Modern", description: "Clean minimal design" },
 ]
 
 const templateHeader = {
   "nz-herald": <HeraldHeader/>,
   "stuff": (
-    <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-9xl px-4 py-4 sm:px-6 lg:px-8">
       <StuffHeader/>
     </div>
   ),

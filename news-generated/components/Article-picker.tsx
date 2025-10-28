@@ -11,10 +11,10 @@ const tags = Array.from({ length: 50 }).map(
 
 export function ArticlePicker({articles, onClick}: {articles: GeneratedArticle[] | null, onClick?: (article: GeneratedArticle) => void}) {
     return (
-      <>  
+      <div className="py-4">  
           <h1>Articles</h1>
           <ScrollArea 
-            className={`h-72 w-full rounded-md border ${!articles ? 'opacity-50 pointer-events-none' : ''}`}
+            className={`h-72 w-full rounded-md border bg-gray-100 ${!articles ? 'opacity-50 pointer-events-none' : ''}`}
           >
             <div className="p-4">
               {!articles ? (
@@ -35,6 +35,6 @@ export function ArticlePicker({articles, onClick}: {articles: GeneratedArticle[]
               )}
             </div>
           </ScrollArea>
-      </>
+      </div>
     )
   }

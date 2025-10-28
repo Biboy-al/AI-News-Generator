@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { Separator } from "@/components/ui/separator"
-import { Bookmark, Gift, Link, Share2, Volume2 } from 'lucide-react';
+import { Bookmark, Gift, Share2, Volume2 } from 'lucide-react';
 import { GeneratedArticle } from "../news-generator";
 import { HeraldHeader } from "./herald-header";
 import { HeraldFooter } from "./herald-footer";
@@ -10,10 +10,11 @@ import { Button } from "../ui/button";
 import OtherArticle from "./other-art";
 import { RecommendedForYou } from "./recommened-for-you";
 import HeraldLogo from '@/components/svg/herald_logo.svg'
+import Link from "next/link";
 
 const style = {
-    container: "bg-white text-black",
-    contentContainer: " w-10/11 flex", // Use px-10 and bg-black
+    container: "bg-white text-black pt-24",
+    contentContainer: " w-10/11 flex",
     header: <HeraldHeader/>,
     footer: <HeraldFooter/>,
     headline: "font-serif text-4xl font-bold leading-tight text-black",
@@ -53,11 +54,6 @@ export function HeraldLayout({article} : {article : GeneratedArticle}) {
     // Main contaeinr
     <div className={`min-h-full flex flex-col items-center ${style.container}`}>
 
-        {/* Header */}
-        {/* <div className="w-full">
-            <HeraldHeader/>
-        </div> */}
-
         {/* Content container div */}
         <div className={`${style.contentContainer}`}>
 
@@ -69,6 +65,14 @@ export function HeraldLayout({article} : {article : GeneratedArticle}) {
             <article className="flex mx-auto gap-16 w-3/5">
 
                 <div className="flex flex-col">
+
+                    <div className="flex pb-4">
+                        <span className="text-gray-700 hover:text-gray-900 cursor-pointer text-sm">Home</span>
+                        <p>/</p>
+                        <span className="text-gray-700 hover:text-gray-900 cursor-pointer text-sm">Breaking News</span>
+
+                    </div>
+
                     {/* Headline */}
                     <h1 className={`mb-4 text-balance ${style.headline}`}>{article.headline}</h1>
                         
